@@ -3,13 +3,13 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
-
 const app = express();
+const routes = require('./server/routes')
 
 // middleware
 app.use(helmet());
 
-app.use('/api', require('./server/routes'));
+app.use('/api', routes);
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static assets first
