@@ -9,6 +9,7 @@ const routes = require('./server/routes')
 // middleware
 app.use(helmet());
 
+app.use(express.urlencoded({ extended: true }))
 app.use('/api', routes);
 
 if (process.env.NODE_ENV === 'production') {
