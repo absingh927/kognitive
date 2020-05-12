@@ -1,7 +1,8 @@
 import React from "react";
-import { get } from "idb-keyval";
+import { get, set } from "idb-keyval";
 import { Redirect } from "react-router-dom";
 import { User } from "../types";
+import { getTaskList } from "./TaskService";
 
 interface TaskProps {
   userInfo: User | undefined;
@@ -13,6 +14,7 @@ const Tasks = (props: TaskProps) => {
     props.userInfo || undefined
   );
   const [loading, setLoading] = React.useState(true);
+  const [tasks, setTasks] = React.useState();
 
   React.useEffect(() => {
     if (!props.userInfo) {
@@ -23,10 +25,19 @@ const Tasks = (props: TaskProps) => {
     }
   }, [props.userInfo]);
 
+  React.useEffect(() => {
+    if (userInfo) {
+      getTaskList(userInfo.user_token, "357").then((res) => {
+        setTasks(res.data);
+        set("taskList", res.data);
+      });
+    }
+  }, [userInfo]);
+
   if (!userInfo && !loading) {
     return <Redirect to="/" />;
   }
-
+  console.log("tasks", tasks);
   return <h1>View your tasks</h1>;
 };
 
