@@ -1,6 +1,5 @@
 import React from "react";
 import { set } from "idb-keyval";
-// import { get, set } from "idb-keyval";
 import { Redirect } from "react-router-dom";
 import { User } from "../types";
 import {
@@ -19,12 +18,12 @@ interface LoginProps {
 }
 
 const Login = (props: LoginProps) => {
-  // const [newUser, setNewUser] = React.useState<User | boolean>(false);
+  const [userInfo, setUserInfo] = React.useState<User | undefined>(undefined);
   const [email, setEmail] = React.useState("");
   const [pwd, setPwd] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
-  if (props.userInfo && props.userInfo.user_id) {
+  if ((props.userInfo && props.userInfo.user_id) || userInfo) {
     return <Redirect to="/tasks" />;
   }
 
@@ -50,7 +49,11 @@ const Login = (props: LoginProps) => {
         user_email: email,
       };
       setLoading(false);
-      set("userInfo", formattedData);
+      set("userInfo", formattedData).then(() => {
+        setUserInfo(formattedData);
+      });
+
+      // state
     } catch (error) {
       setLoading(false);
     }

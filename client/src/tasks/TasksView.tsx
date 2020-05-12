@@ -1,5 +1,5 @@
 import React from "react";
-// import { get } from "idb-keyval";
+import { get } from "idb-keyval";
 import { Redirect } from "react-router-dom";
 import { User } from "../types";
 
@@ -8,16 +8,23 @@ interface TaskProps {
 }
 
 const Tasks = (props: TaskProps) => {
-  // const [userInfo, setUserInfo] = React.useState<User | boolean>(false);
+  console.log("task view props", props);
+  const [userInfo, setUserInfo] = React.useState<User | undefined>(
+    props.userInfo || undefined
+  );
+  const [loading, setLoading] = React.useState(true);
 
-  // React.useEffect(() => {
-  //   get("userInfo").then((val) => {
-  //     setUserInfo(val ? (val as User) : false);
-  //   });
-  // }, []);
+  React.useEffect(() => {
+    if (!props.userInfo) {
+      get("userInfo").then((val) => {
+        setUserInfo(val ? (val as User) : undefined);
+        setLoading(false);
+      });
+    }
+  }, [props.userInfo]);
 
-  if (!props.userInfo) {
-    return <Redirect to="/login" />;
+  if (!userInfo && !loading) {
+    return <Redirect to="/" />;
   }
 
   return <h1>View your tasks</h1>;
