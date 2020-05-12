@@ -1,19 +1,38 @@
-import React from 'react'
-import './App.css'
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import Login from "./login/LoginView";
+import Tasks from "./tasks/TasksView";
+import { Container } from "reactstrap";
+import { User } from "./types";
+import { get } from "idb-keyval";
 
-import {Container} from "reactstrap"
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import Login from "./login/LoginView"
-import Tasks from "./tasks/TasksView"
+function App() {
+  const [userInfo, setUserInfo] = React.useState<User | boolean>(false);
 
-function App() {  
+  React.useEffect(() => {
+    get("userInfo").then((val) => {
+      setUserInfo(val ? (val as User) : false);
+    });
+  }, []);
+
   return (
-    <Container fluid={true}>
+    <Container fluid={true} style={{ height: "100vh" }}>
       <Router>
         <Switch>
-          <Redirect exact path='/' to="/login"/>
-          <Route exact path='/login' component={Login}/>
-          <Route path='/tasks' component={Tasks}/>
+          <Route
+            path="/login"
+            render={(props) => <Login {...props} userInfo={userInfo} />}
+          />
+          <Route
+            path="/tasks"
+            render={(props) => <Tasks {...props} userInfo={userInfo} />}
+          />
+          <Redirect exact path="/" to={"/login"} />
           <Route exact render={() => <h1>Opps, Page not found!</h1>} />
         </Switch>
       </Router>
