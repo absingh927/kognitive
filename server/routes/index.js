@@ -13,7 +13,7 @@ router.post("/login", async (req, res) => {
 
   try {
     const resData = await api.authenticateUser(req.body);
-    return res.send(resData);
+    return res.send(resData.data);
   } catch (error) {
     console.log(error);
     return res.status(500).json({

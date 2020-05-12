@@ -12,11 +12,11 @@ import { User } from "./types";
 import { get } from "idb-keyval";
 
 function App() {
-  const [userInfo, setUserInfo] = React.useState<User | boolean>(false);
+  const [userInfo, setUserInfo] = React.useState<User | undefined>(undefined);
 
   React.useEffect(() => {
     get("userInfo").then((val) => {
-      setUserInfo(val ? (val as User) : false);
+      setUserInfo(val ? (val as User) : undefined);
     });
   }, []);
 

@@ -15,7 +15,7 @@ import {
 import { authenticateUser } from "./LoginService";
 
 interface LoginProps {
-  userInfo: User | boolean;
+  userInfo: User | undefined;
 }
 
 const Login = (props: LoginProps) => {
@@ -24,7 +24,7 @@ const Login = (props: LoginProps) => {
   const [pwd, setPwd] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
-  if (props.userInfo) {
+  if (props.userInfo && props.userInfo.user_id) {
     return <Redirect to="/tasks" />;
   }
 

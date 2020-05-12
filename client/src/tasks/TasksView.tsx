@@ -1,10 +1,10 @@
 import React from "react";
-import { get } from "idb-keyval";
+// import { get } from "idb-keyval";
 import { Redirect } from "react-router-dom";
 import { User } from "../types";
 
 interface TaskProps {
-  userInfo: User | boolean;
+  userInfo: User | undefined;
 }
 
 const Tasks = (props: TaskProps) => {
