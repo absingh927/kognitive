@@ -5,7 +5,7 @@ export interface LoginPayload {
   password: string;
   tenantid: number;
 }
-export const authenticateUser = async (loginPayload: LoginPayload) => {
+export const authenticateUser = async (payload: LoginPayload) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -13,7 +13,7 @@ export const authenticateUser = async (loginPayload: LoginPayload) => {
   };
 
   return axios
-    .post("/api/login", JSON.stringify(loginPayload), config)
+    .post("/api/login", JSON.stringify(payload), config)
     .then((res) => {
       return res.data;
     })
