@@ -6,6 +6,23 @@ import styled from "styled-components";
 import { authenticateUser } from "./LoginService";
 import { darken } from "polished";
 
+// Icon imports
+import google from "../assets/icons/othersize/google-favicon.png";
+import google2x from "../assets/icons/othersize/google-favicon@2x.png";
+import google3x from "../assets/icons/othersize/google-favicon@3x.png";
+
+import microsoft from "../assets/icons/othersize/microsoft.png";
+import microsoft2x from "../assets/icons/othersize/microsoft@2x.png";
+import microsoft3x from "../assets/icons/othersize/microsoft@3x.png";
+
+import personIcon from "../assets/icons/24/icon-24-person-grey.png";
+import personIcon2x from "../assets/icons/24/icon-24-person-grey@2x.png";
+import personIcon3x from "../assets/icons/24/icon-24-person-grey@3x.png";
+
+import pwdIcon from "../assets/icons/24/icon-24-password.png";
+import pwdIcon2x from "../assets/icons/24/icon-24-password@2x.png";
+import pwdIcon3x from "../assets/icons/24/icon-24-password@3x.png";
+
 const LoginContainer = styled.div`
   display: flex;
   align-items: center;
@@ -19,13 +36,13 @@ const Wrapper = styled.div`
   margin: 0 1rem;
   background-color: #fff;
   border-radius: 0.5rem;
-  min-height: 400px;
+  min-height: 300px;
   max-width: 450px;
   width: 100%;
 `;
 
 const AuthButton = styled.div`
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   background-color: #fff;
   border: 1px solid #f2f4f4;
   border-radius: 0.5rem;
@@ -35,6 +52,11 @@ const AuthButton = styled.div`
   color: #000;
   cursor: pointer;
   margin: 1rem 0;
+  font-size: 0.75rem;
+
+  img {
+    margin-right: 0.5rem;
+  }
 
   &:hover {
     background-color: ${darken("0.2", "#f2f4f4")};
@@ -46,18 +68,36 @@ const Spacer = styled.div`
   text-align: center;
 `;
 
+const InputContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin: 0.5rem 0;
+`;
+
 const StyledInput = styled.input`
   border-radius: 0.25rem;
   background: #f2f4f4;
   border: none;
-  margin: 0.5rem 0;
-  padding: 1rem 0.25rem;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+  padding: 1rem 0;
   display: block;
   width: 100%;
 
-  ::placeholder {
+  :placeholder {
     color: ${darken("0.2", "#f2f4f4")};
   }
+
+  :focus {
+    outline: none;
+  }
+`;
+
+const InputIcon = styled.img`
+  background: #f2f4f4;
+  max-width: 15px;
+  padding: 1rem 0.5rem;
 `;
 
 const LoginButton = styled.button`
@@ -111,12 +151,12 @@ const Login = (props: LoginProps) => {
         user_id: data.user_id,
         user_email: email,
       };
+
       setLoading(false);
+      // send data to persistance state and update local state
       set("userInfo", formattedData).then(() => {
         setUserInfo(formattedData);
       });
-
-      // state
     } catch (error) {
       setLoading(false);
     }
@@ -125,24 +165,52 @@ const Login = (props: LoginProps) => {
   const renderform = () => {
     return (
       <>
-        <AuthButton>Login with Google</AuthButton>
-        <AuthButton>Login with Microsoft</AuthButton>
+        <AuthButton>
+          <img
+            src={google}
+            srcSet={`${google2x} 2x, ${google3x} 3x`}
+            alt="Google Logo"
+          />
+          Login with Google
+        </AuthButton>
+        <AuthButton>
+          <img
+            src={microsoft}
+            srcSet={`${microsoft2x} 2x, ${microsoft3x} 3x`}
+            alt="Microsoft logo"
+          />
+          Login with Microsoft
+        </AuthButton>
         <Spacer>OR</Spacer>
         <FormGroup onSubmit={handleLogin}>
-          <StyledInput
-            type="email"
-            name="email"
-            placeholder="Your Employee ID"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <StyledInput
-            type="password"
-            name="password"
-            placeholder="Your Password"
-            value={pwd}
-            onChange={(e) => setPwd(e.target.value)}
-          />
+          <InputContainer>
+            <InputIcon
+              src={personIcon}
+              srcSet={`${personIcon2x} 2x, ${personIcon3x} 3x`}
+              alt="person"
+            />
+            <StyledInput
+              type="email"
+              name="email"
+              placeholder="Your Employee ID"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </InputContainer>
+          <InputContainer>
+            <InputIcon
+              src={pwdIcon}
+              srcSet={`${pwdIcon2x} 2x, ${pwdIcon3x} 3x`}
+              alt="password"
+            />
+            <StyledInput
+              type="password"
+              name="password"
+              placeholder="Your Password"
+              value={pwd}
+              onChange={(e) => setPwd(e.target.value)}
+            />
+          </InputContainer>
           <LoginButton color="primary" disabled={!validateForm()} type="submit">
             LogIn
           </LoginButton>
