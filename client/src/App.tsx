@@ -7,9 +7,15 @@ import {
 } from "react-router-dom";
 import Login from "./login/LoginView";
 import Tasks from "./tasks/TasksView";
-import { Container } from "reactstrap";
 import { User } from "./types";
 import { get } from "idb-keyval";
+import styled from "styled-components";
+
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background: #f2f4f4;
+`;
 
 function App() {
   const [userInfo, setUserInfo] = React.useState<User | undefined>(undefined);
@@ -22,7 +28,7 @@ function App() {
   }, []);
 
   return (
-    <Container fluid={true} style={{ height: "100vh" }}>
+    <Container>
       <Router>
         <Switch>
           <Route
