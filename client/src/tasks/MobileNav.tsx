@@ -18,15 +18,15 @@ import learn from "../assets/icons/24/icons-24-learn.png";
 import learn2x from "../assets/icons/24/icons-24-learn@2x.png";
 import learn3x from "../assets/icons/24/icons-24-learn@3x.png";
 
-import account from "../assets/icons/36/reactangle.png";
-import account2x from "../assets/icons/24/reactangle@2x.png";
-import account3x from "../assets/icons/24/reactangle@3x.png";
+import account from "../assets/icons/36/rectangle.png";
+import account2x from "../assets/icons/36/rectangle@2x.png";
+import account3x from "../assets/icons/36/rectangle@3x.png";
 
 const NavContainer = styled.div`
-  padding: 2rem 0;
+  padding: 1.5rem 0.5rem;
   display: flex;
   align-items: center;
-  background-color: #000;
+  background-color: #fff;
   justify-content: space-between;
 
   @media (min-width: 768px) {
@@ -34,17 +34,25 @@ const NavContainer = styled.div`
   }
 `;
 
-const NavItem = styled.img`
+const NavItem = styled.img<{ isActive?: boolean }>`
   margin: 1rem 0.5rem;
   cursor: pointer;
+  padding: 5px;
+  border-radius: 0.5rem;
+  background: ${(props) => (props.isActive ? "#007bff" : "none")};
 `;
 
 const MobileNav = () => {
   const location = useLocation();
-  console.log("Mobile Nav", location);
+
   return (
     <NavContainer>
-      <NavItem src={home} srcSet={`${home2x} 2x, ${home3x} 3x`} alt="Home" />
+      <NavItem
+        src={home}
+        srcSet={`${home2x} 2x, ${home3x} 3x`}
+        alt="Home"
+        isActive={location.pathname === "/tasks"}
+      />
       <NavItem
         src={schedule}
         srcSet={`${schedule2x} 2x, ${schedule3x} 3x`}

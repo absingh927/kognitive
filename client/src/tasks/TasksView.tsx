@@ -6,14 +6,15 @@ import { getTaskList } from "./TaskService";
 import styled from "styled-components";
 import MainNav from "./MainNav";
 import MobileNav from "./MobileNav";
+import TaskListView from "./TaskList/TaskListView";
 
 const TaskViewContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
   background: #f2f4f4;
   margin: 0 1rem;
+  flex-direction: column;
+  height: calc(100vh - 125px);
 `;
 
 interface TaskProps {
@@ -55,6 +56,7 @@ const Tasks = (props: TaskProps) => {
       <TaskViewContainer>
         {/* Top NAV */}
         <MainNav />
+        <TaskListView />
         {/* Main Card Wrapper */}
       </TaskViewContainer>
       {/* Mobile Nav */}
