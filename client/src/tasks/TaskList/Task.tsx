@@ -6,9 +6,9 @@ import CritcalIcon from "../../assets/icons/16/icons-16-emptyTask-critical.png";
 import CritcalIcon2x from "../../assets/icons/16/icons-16-emptyTask-critical@2x.png";
 import CritcalIcon3x from "../../assets/icons/16/icons-16-emptyTask-critical@3x.png";
 
-// import Empty from "../../assets/icons/16/icons-16-emptyTask.png";
-// import Empty2x from "../../assets/icons/16/icons-16-emptyTask@2x.png";
-// import Empty3x from "../../assets/icons/16/icons-16-emptyTask@3x.png";
+import Empty from "../../assets/icons/16/icons-16-emptyTask.png";
+import Empty2x from "../../assets/icons/16/icons-16-emptyTask@2x.png";
+import Empty3x from "../../assets/icons/16/icons-16-emptyTask@3x.png";
 
 // import Roi from "../../assets/icons/16/icons-16-emptyTask-roi.png";
 // import Roi2x from "../../assets/icons/16/icons-16-emptyTask-roi@2x.png";
@@ -17,6 +17,7 @@ import CritcalIcon3x from "../../assets/icons/16/icons-16-emptyTask-critical@3x.
 import RightArrow from "../../assets/icons/16/icons-16-rightarrowSmall.png";
 import RightArrow2x from "../../assets/icons/16/icons-16-rightarrowSmall@2x.png";
 import RightArrow3x from "../../assets/icons/16/icons-16-rightarrowSmall@3x.png";
+import { TaskData } from "../TasksView";
 
 const TaskContainer = styled.div`
   display: flex;
@@ -45,25 +46,38 @@ const TaskDue = styled.div`
   }
 `;
 
-const Task = () => {
+interface TaskProps {
+  task: TaskData;
+  isCritical: boolean;
+}
+
+const getIcon = (isCritical?: boolean) => {
+  const critical = (
+    <img
+      src={CritcalIcon}
+      srcSet={`${CritcalIcon2x} 2x, ${CritcalIcon3x} 3x`}
+      alt="CritcalIcon"
+    />
+  );
+  const dummy = (
+    <img src={Empty} srcSet={`${Empty2x} 2x, ${Empty3x} 3x`} alt="Icon" />
+  );
+  return isCritical ? critical : dummy;
+};
+
+const Task = (props: TaskProps) => {
   return (
     <TaskContainer>
-      <StatusIcon>
-        <img
-          src={CritcalIcon}
-          srcSet={`${CritcalIcon2x} 2x, ${CritcalIcon3x} 3x`}
-          alt="CritcalIcon"
-        />
-      </StatusIcon>
+      <StatusIcon>{getIcon(props.isCritical)}</StatusIcon>
       <TaskInfo>
-        Inventory Count
+        {props.task.attr.label[0]}
         <TaskDue>
           <img
             src={RightArrow}
             srcSet={`${RightArrow2x} 2x, ${RightArrow3x} 3x`}
             alt="RightArrow"
           />
-          Due Today
+          {props.task.due_dt}
         </TaskDue>
       </TaskInfo>
     </TaskContainer>

@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { darken } from "polished";
 import Task from "./Task";
+import { TaskData } from "../TasksView";
 
 const Container = styled.div`
   background: #fff;
   padding: 1rem;
-  width: 100%;
+  width: 93%;
+  border-radius: 0.5rem;
 `;
 
 const ListViewHeader = styled.div`
@@ -47,20 +49,78 @@ const Wrapper = styled.div`
   margin: 1rem 0;
 `;
 
-const renderTasks = () => {
+const TaskGroup = styled.div`
+  margin: 1rem 0;
+  max-height: 185px;
+  overflow: scroll;
+`;
+
+interface TaskListViewProps {
+  taskData: TaskData[];
+}
+
+const sortedByTime = (data: TaskData[]) => {
+  return data.sort((a, b) => b.due_dt.localeCompare(a.due_dt));
+};
+
+const groubyPriority = (data: TaskData[]) => {
+  return data.reduce<any>((acc, curr) => {
+    const key = curr.attr.priority[0];
+    acc[key] = [...(acc[key] || []), curr];
+    return acc;
+  }, {});
+};
+
+const renderCriticalTasks = (data: TaskData[]) => {
+  if (data.length === 0) {
+    return (
+      <TaskGroup>
+        <p>No Tasks available.</p>
+      </TaskGroup>
+    );
+  }
+
+  const grouped = groubyPriority(data)["High"];
+
   return (
     <>
       <StatusHeader>
-        <StatusBtn isCritical={true}>Critical 2</StatusBtn>
+        <StatusBtn isCritical={true}>Critical {grouped.length}</StatusBtn>
       </StatusHeader>
-      <Task />
-      <Task />
-      <Task />
+      <TaskGroup>
+        {grouped.map((t: TaskData, idx: number) => {
+          return <Task key={idx} isCritical={true} task={t} />;
+        })}
+      </TaskGroup>
     </>
   );
 };
 
-const TaskListView = () => {
+const renderAllTasks = (data: TaskData[]) => {
+  if (data.length === 0) {
+    return (
+      <TaskGroup>
+        <p>No Tasks available.</p>
+      </TaskGroup>
+    );
+  }
+  return (
+    <>
+      <StatusHeader>
+        <StatusBtn isCritical={false}>Critical {data.length}</StatusBtn>
+      </StatusHeader>
+      <TaskGroup>
+        {data.map((t: TaskData, idx: number) => {
+          return <Task key={idx} isCritical={false} task={t} />;
+        })}
+      </TaskGroup>
+    </>
+  );
+};
+
+const TaskListView = (props: TaskListViewProps) => {
+  const sortedData = sortedByTime(props.taskData);
+
   // Progress Bar
   return (
     <Container>
@@ -68,7 +128,10 @@ const TaskListView = () => {
         <Wrapper>
           <MyTaskBtn>My Tasks</MyTaskBtn>
         </Wrapper>
-        <Wrapper>{renderTasks()}</Wrapper>
+        <Wrapper>
+          {renderCriticalTasks(sortedData)}
+          {renderAllTasks(sortedData)}
+        </Wrapper>
       </ListViewHeader>
     </Container>
   );
