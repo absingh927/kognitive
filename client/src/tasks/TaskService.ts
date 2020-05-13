@@ -7,10 +7,10 @@ export const getTaskList = (token: string, parentId?: string) => {
     },
   };
 
-  const url = parentId ? `api/tasks/${parentId}` : "api/tasks";
+  const url = parentId ? `api/tasks/${parentId}` : "api/tasks/";
 
   return axios
     .get(url, config)
-    .then((res) => res.data)
+    .then((res) => res)
     .catch((err) => err);
 };

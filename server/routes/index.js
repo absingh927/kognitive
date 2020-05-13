@@ -37,7 +37,7 @@ router.get("/tasks/:id?", async (req, res) => {
 
   try {
     const resData = await api.getTaskList(data);
-    return res.send(resData);
+    return res.send(resData.data);
   } catch (error) {
     console.log(error);
     return res.status(500).json({

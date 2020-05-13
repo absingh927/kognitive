@@ -1,0 +1,58 @@
+import React from "react";
+import styled from "styled-components";
+
+import mainLogo from "../assets/kog_logo_flat.png";
+import mainLogo2x from "../assets/kog_logo_flat@2x.png";
+import mainLogo3x from "../assets/kog_logo_flat@3x.png";
+
+import timi from "../assets/icons/24/timi.png";
+import timi2x from "../assets/icons/24/timi@2x.png";
+import timi3x from "../assets/icons/24/timi@3x.png";
+
+const MainNavContainer = styled.div`
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+`;
+
+const NavItem = styled.div`
+  margin: 1rem 0.5rem;
+  cursor: pointer;
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
+`;
+
+const LogoutBtn = styled.div`
+  border: none;
+  curosr: hover;
+  margin: 1rem 0.5rem;
+  color: #f2f4f4;
+  background: none;
+`;
+
+const MainNav = () => {
+  return (
+    <MainNavContainer>
+      <img
+        src={mainLogo}
+        srcSet={`${mainLogo2x} 2x, ${mainLogo3x} 3x`}
+        alt="Kognitive Logo"
+      />
+      <NavItem>Tasks</NavItem>
+      <NavItem>Schedule</NavItem>
+      <NavItem>Learn</NavItem>
+      <img
+        src={timi}
+        srcSet={`${timi2x} 2x, ${timi3x} 3x`}
+        alt="Kognitive Logo"
+      />
+      <LogoutBtn onClick={() => console.log("logout")}>Logout</LogoutBtn>
+    </MainNavContainer>
+  );
+};
+
+export default MainNav;

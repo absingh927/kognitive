@@ -20,7 +20,6 @@ const Container = styled.div`
 function App() {
   const [userInfo, setUserInfo] = React.useState<User | undefined>(undefined);
 
-  console.log("userInfo in App", userInfo);
   React.useEffect(() => {
     get("userInfo").then((val) => {
       setUserInfo(val ? (val as User) : undefined);
