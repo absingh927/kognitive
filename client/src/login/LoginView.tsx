@@ -23,6 +23,10 @@ import pwdIcon from "../assets/icons/24/icon-24-password.png";
 import pwdIcon2x from "../assets/icons/24/icon-24-password@2x.png";
 import pwdIcon3x from "../assets/icons/24/icon-24-password@3x.png";
 
+import mainLogo from "../assets/kog_logo_flat.png";
+import mainLogo2x from "../assets/kog_logo_flat@2x.png";
+import mainLogo3x from "../assets/kog_logo_flat@3x.png";
+
 const LoginContainer = styled.div`
   display: flex;
   align-items: center;
@@ -59,7 +63,7 @@ const AuthButton = styled.div`
   }
 
   &:hover {
-    background-color: ${darken("0.2", "#f2f4f4")};
+    background-color: ${darken("0.1", "#f2f4f4")};
   }
 `;
 
@@ -110,12 +114,24 @@ const LoginButton = styled.button`
   text-align: center;
   border-radius: 10rem;
   margin-top: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${darken("0.1", "#007bff")};
+  }
 `;
 
 const FormGroup = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Mainlogo = styled.div`
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 interface LoginProps {
@@ -167,6 +183,13 @@ const Login = (props: LoginProps) => {
   const renderform = () => {
     return (
       <>
+        <Mainlogo>
+          <img
+            src={mainLogo}
+            srcSet={`${mainLogo2x} 2x, ${mainLogo3x} 3x`}
+            alt="Kognitive Logo"
+          />
+        </Mainlogo>
         <AuthButton>
           <img
             src={google}
@@ -222,7 +245,7 @@ const Login = (props: LoginProps) => {
   };
   return (
     <LoginContainer>
-      <Wrapper>{loading ? <p>Logging you in.....</p> : renderform()}</Wrapper>
+      <Wrapper>{loading ? <p>Loading.....</p> : renderform()}</Wrapper>
     </LoginContainer>
   );
 };
