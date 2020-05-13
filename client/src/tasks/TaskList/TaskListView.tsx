@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { darken } from "polished";
 import Task from "./Task";
 import { TaskData } from "../TasksView";
+import { Line } from "rc-progress";
 
 const Container = styled.div`
   background: #fff;
@@ -118,15 +119,35 @@ const renderAllTasks = (data: TaskData[]) => {
   );
 };
 
+const getPercentCompleteTasks = (data: TaskData[]) => {
+  if (data.length === 0) {
+    return 0;
+  }
+  const d = data.reduce<any>((acc, curr) => {
+    const key = curr.status;
+    acc[key] = [...(acc[key] || []), curr];
+    return acc;
+  }, {});
+
+  return Math.floor((d["Done"].length / data.length) * 100);
+};
+
 const TaskListView = (props: TaskListViewProps) => {
   const sortedData = sortedByTime(props.taskData);
-
   // Progress Bar
   return (
     <Container>
       <ListViewHeader>
         <Wrapper>
           <MyTaskBtn>My Tasks</MyTaskBtn>
+        </Wrapper>
+        <Wrapper>
+          Today's Progress : {getPercentCompleteTasks(sortedData) + "%"}
+          <Line
+            percent={getPercentCompleteTasks(sortedData)}
+            strokeWidth={4}
+            strokeColor="#21ab07"
+          />
         </Wrapper>
         <Wrapper>
           {renderCriticalTasks(sortedData)}

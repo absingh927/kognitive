@@ -17,6 +17,7 @@
     "idb-keyval": "^3.2.0",
     "moment": "^2.25.3",
     "polished": "^3.6.3",
+    "rc-progress": "^2.5.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",

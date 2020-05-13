@@ -77,7 +77,7 @@ const Task = (props: TaskProps) => {
             srcSet={`${RightArrow2x} 2x, ${RightArrow3x} 3x`}
             alt="RightArrow"
           />
-          {props.task.due_dt}
+          Due {props.task.due_dt}
         </TaskDue>
       </TaskInfo>
     </TaskContainer>
