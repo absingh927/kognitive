@@ -54,6 +54,10 @@ const TaskGroup = styled.div`
   margin: 1rem 0;
   max-height: 185px;
   overflow: scroll;
+
+  @media (min-width: 768px) {
+    max-height: 200px;
+  }
 `;
 
 interface TaskListViewProps {
@@ -145,7 +149,7 @@ const TaskListView = (props: TaskListViewProps) => {
           Today's Progress : {getPercentCompleteTasks(sortedData) + "%"}
           <Line
             percent={getPercentCompleteTasks(sortedData)}
-            strokeWidth={4}
+            strokeWidth={2}
             strokeColor="#21ab07"
           />
         </Wrapper>
