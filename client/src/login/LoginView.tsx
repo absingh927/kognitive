@@ -98,6 +98,8 @@ const InputIcon = styled.img`
   background: #f2f4f4;
   max-width: 15px;
   padding: 1rem 0.5rem;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
 `;
 
 const LoginButton = styled.button`
